@@ -1,4 +1,7 @@
+#ifndef EX3_HEALTH
+#define EX3_HEALTH
 
+#include "HealthPoints.h"
 
 HealthPoints::HealthPoints(int healthPoints)
 {
@@ -25,7 +28,10 @@ HealthPoints HealthPoints::operator +(int adding) const{
     HealthPoints result(*this); 
     return(result += adding);
 }
-
+HealthPoints operator+(const int value, const HealthPoints& hp) 
+{
+    return (hp+value);
+}
 HealthPoints& HealthPoints::operator -=(int deducting){
     if(m_healthPoints<deducting){
         m_healthPoints = 0;
@@ -38,33 +44,48 @@ HealthPoints& HealthPoints::operator -=(int deducting){
 HealthPoints HealthPoints::operator -(int deducting) const{
     return HealthPoints(*this) -= deducting;
 }
+HealthPoints operator-(const int value, const HealthPoints& hp) 
+{
+    return (hp-value);
+}
+HealthPoints HealthPoints::operator = (const HealthPoints& value){
+    if(this==&value){
+        return *this;
+    }
+    this->m_maxHP = value.m_maxHP;
+    this->m_healthPoints = value.m_healthPoints;
+    //TODO: check if we have to change also m_maxHP
+    return (*this);
+}
 
-friend bool operator == (const HealthPoints& hp1,const HealthPoints& hp2){
+bool operator == (const HealthPoints& hp1,const HealthPoints& hp2){
     return (hp1.m_healthPoints == hp2.m_healthPoints);
 }
 
-friend bool operator != (const HealthPoints& hp1,const HealthPoints& hp2){
+bool operator != (const HealthPoints& hp1,const HealthPoints& hp2){
     return (hp1.m_healthPoints != hp2.m_healthPoints);
 }
 
-friend bool operator <= (const HealthPoints& hp1,const HealthPoints& hp2){
+bool operator <= (const HealthPoints& hp1,const HealthPoints& hp2){
     return (hp1.m_healthPoints <= hp2.m_healthPoints);
 }
 
-friend bool operator >= (const HealthPoints& hp1,const HealthPoints& hp2){
+bool operator >= (const HealthPoints& hp1,const HealthPoints& hp2){
     return (hp1.m_healthPoints >= hp2.m_healthPoints);
 }
 
-friend bool operator < (const HealthPoints& hp1,const HealthPoints& hp2){
+bool operator < (const HealthPoints& hp1,const HealthPoints& hp2){
     return (hp1.m_healthPoints < hp2.m_healthPoints);
 }
 
-friend bool operator > (const HealthPoints& hp1,const HealthPoints& hp2){
+bool operator > (const HealthPoints& hp1,const HealthPoints& hp2){
     return (hp1.m_healthPoints > hp2.m_healthPoints);
 }
 
-std::ostream& operator<<(Std::ostream& os, const HealthPoints& hp)
+std::ostream& operator<<(std::ostream& os, const HealthPoints& hp)
 {
     os<<hp.m_healthPoints << "(" << hp.m_maxHP << ")";
     return os;
 }
+
+#endif

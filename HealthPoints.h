@@ -6,6 +6,12 @@ class HealthPoints
 private:
     int m_maxHP;
     int m_healthPoints;
+    friend bool operator == (const HealthPoints& hp1,const HealthPoints& hp2);
+    friend bool operator != (const HealthPoints& hp1,const HealthPoints& hp2);
+    friend bool operator <= (const HealthPoints& hp1,const HealthPoints& hp2);
+    friend bool operator >= (const HealthPoints& hp1,const HealthPoints& hp2);
+    friend bool operator < (const HealthPoints& hp1,const HealthPoints& hp2);
+    friend bool operator > (const HealthPoints& hp1,const HealthPoints& hp2);
 public:
     HealthPoints(int healthPoints=DEFAULT_MAX_HP);
     HealthPoints(const HealthPoints&)=default;
@@ -15,12 +21,11 @@ public:
     HealthPoints operator -(int deducting) const;
     HealthPoints& operator +=(int adding);
     HealthPoints& operator -=(int deducting);
-    friend bool operator == (const HealthPoints& hp1,const HealthPoints& hp2);
-    friend bool operator != (const HealthPoints& hp1,const HealthPoints& hp2);
-    friend bool operator <= (const HealthPoints& hp1,const HealthPoints& hp2);
-    friend bool operator >= (const HealthPoints& hp1,const HealthPoints& hp2);
-    friend bool operator < (const HealthPoints& hp1,const HealthPoints& hp2);
-    friend bool operator > (const HealthPoints& hp1,const HealthPoints& hp2);
-    friend std::ostream& operator<<(Std::ostream& os, const HealthPoints& hp);
+    friend std::ostream& operator<<(std::ostream& os, const HealthPoints& hp);
+
     class InvalidArgument{};
 };
+
+HealthPoints operator+(int value, const HealthPoints& hp) ;
+HealthPoints operator-(int value, const HealthPoints& hp) ;
+
